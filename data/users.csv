@@ -1,0 +1,7 @@
+admin001,admin,15403679698353329596,admin,System Administrator,admin@university.edu,,,,1755428126
+TCH001,teacher1,3831457110983553047,teacher,Dr. John Smith,john.smith@university.edu,123-456-7890,123 University Ave,CSE,1755428126
+TCH002,teacher2,3831457110983553047,teacher,Prof. Jane Doe,jane.doe@university.edu,123-456-7891,124 University Ave,MATH,1755428126
+STU001,student1,3831457110983553047,student,Alice Johnson,alice.j@student.edu,123-456-7892,125 Campus St,CSE,1755428126
+STU002,student2,3831457110983553047,student,Bob Wilson,bob.w@student.edu,123-456-7893,126 Campus St,CSE,1755428126
+STU003,student3,3831457110983553047,student,Carol Brown,carol.b@student.edu,123-456-7894,127 Campus St,MATH,1755428126
+STU004,student4,3831457110983553047,student,David Lee,david.l@student.edu,123-456-7895,128 Campus St,MATH,1755428126
