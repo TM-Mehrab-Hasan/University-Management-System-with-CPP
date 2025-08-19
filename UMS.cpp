@@ -28,6 +28,170 @@
 #include <limits>
 #include <cstdlib>
 
+// ANSI Color Codes for Windows
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+#define BOLD    "\033[1m"
+#define UNDERLINE "\033[4m"
+
+// Background Colors
+#define BG_BLACK   "\033[40m"
+#define BG_RED     "\033[41m"
+#define BG_GREEN   "\033[42m"
+#define BG_YELLOW  "\033[43m"
+#define BG_BLUE    "\033[44m"
+#define BG_MAGENTA "\033[45m"
+#define BG_CYAN    "\033[46m"
+#define BG_WHITE   "\033[47m"
+
+
+// UI Helper Class
+class UIHelper {
+public:
+    static void enableColors() {
+        // Enable ANSI colors in Windows Command Prompt
+        system(""); 
+    }
+    
+    static void clearScreen() {
+        system("cls");
+    }
+    
+    static void printBanner() {
+        std::cout << CYAN << BOLD;
+        std::cout << "\n";
+        std::cout << "  #     # #     # ### #     # ####### ######   #####  ### ####### #     #\n";
+        std::cout << "  #     # ##    #  #  #     # #       #     # #     #  #     #     #   #\n";
+        std::cout << "  #     # # #   #  #  #     # #       #     # #        #     #      # #\n";
+        std::cout << "  #     # #  #  #  #  #     # #####   ######   #####   #     #       #\n";
+        std::cout << "  #     # #   # #  #   #   #  #       #   #         #  #     #       #\n";
+        std::cout << "  #     # #    ##  #    # #   #       #    #  #     #  #     #       #\n";
+        std::cout << "   #####  #     # ###    #    ####### #     #  #####  ###    #       #\n";
+        std::cout << "\n";
+        std::cout << "  #     #    #    #     #    #     #####  ####### #     # ####### #     # #######\n";
+        std::cout << "  ##   ##   # #   ##    #   # #   #     # #       ##   ## #       ##    #    #\n";
+        std::cout << "  # # # #  #   #  # #   #  #   #  #       #       # # # # #       # #   #    #\n";
+        std::cout << "  #  #  # #     # #  #  # #     # #  #### #####   #  #  # #####   #  #  #    #\n";
+        std::cout << "  #     # ####### #   # # ####### #     # #       #     # #       #   # #    #\n";
+        std::cout << "  #     # #     # #    ## #     # #     # #       #     # #       #    ##    #\n";
+        std::cout << "  #     # #     # #     # #     #  #####  ####### #     # ####### #     #    #\n";
+        std::cout << "\n";
+        std::cout << "   #####  #     #  #####  ####### ####### #     #\n";
+        std::cout << "  #     #  #   #  #     #    #    #       ##   ##\n";
+        std::cout << "  #         # #   #          #    #       # # # #\n";
+        std::cout << "   #####     #     #####     #    #####   #  #  #\n";
+        std::cout << "        #    #          #    #    #       #     #\n";
+        std::cout << "  #     #    #    #     #    #    #       #     #\n";
+        std::cout << "   #####     #     #####     #    ####### #     #\n";
+        std::cout << RESET;
+        
+        std::cout << YELLOW << BOLD << "\n              * Advanced University Management System v2.0 *\n" << RESET;
+        std::cout << GREEN << "                     Complete Academic Solution\n" << RESET;
+        std::cout << MAGENTA << "================================================================================\n" << RESET;
+    }
+    
+    static void printSectionHeader(const std::string& title, const std::string& icon = "*") {
+        std::cout << "\n" << CYAN << BG_BLUE << BOLD;
+        std::cout << "+==============================================================================+\n";
+        std::cout << "|" << RESET << YELLOW << BOLD << "  " << icon << " " << title;
+        
+        // Pad with spaces to align the right border
+        int padding = 78 - title.length() - 4;
+        for(int i = 0; i < padding; i++) std::cout << " ";
+        
+        std::cout << CYAN << BG_BLUE << "|\n";
+        std::cout << "+==============================================================================+" << RESET << "\n";
+    }
+    
+    static void printMenuOption(int number, const std::string& option, const std::string& icon = ">") {
+        std::cout << BOLD << GREEN << "  " << icon << " [" << YELLOW << number << GREEN << "] " 
+                  << CYAN << option << RESET << "\n";
+    }
+    
+    static void printSuccessMessage(const std::string& message) {
+        std::cout << "\n" << GREEN << BOLD << "SUCCESS: " << message << RESET << "\n";
+    }
+    
+    static void printErrorMessage(const std::string& message) {
+        std::cout << "\n" << RED << BOLD << "ERROR: " << message << RESET << "\n";
+    }
+    
+    static void printWarningMessage(const std::string& message) {
+        std::cout << "\n" << YELLOW << BOLD << "WARNING: " << message << RESET << "\n";
+    }
+    
+    static void printInfoMessage(const std::string& message) {
+        std::cout << "\n" << BLUE << BOLD << "INFO: " << message << RESET << "\n";
+    }
+    
+    static void printTableHeader(const std::vector<std::string>& headers) {
+        std::cout << CYAN << BOLD;
+        std::cout << "+";
+        for(size_t i = 0; i < headers.size(); i++) {
+            for(int j = 0; j < 20; j++) std::cout << "-";
+            if(i < headers.size() - 1) std::cout << "+";
+        }
+        std::cout << "+\n";
+        
+        std::cout << "|";
+        for(const auto& header : headers) {
+            std::cout << std::left << std::setw(20) << header;
+            std::cout << "|";
+        }
+        std::cout << "\n";
+        
+        std::cout << "+";
+        for(size_t i = 0; i < headers.size(); i++) {
+            for(int j = 0; j < 20; j++) std::cout << "-";
+            if(i < headers.size() - 1) std::cout << "+";
+        }
+        std::cout << "+\n" << RESET;
+    }
+    
+    static void printTableRow(const std::vector<std::string>& data) {
+        std::cout << WHITE << "|";
+        for(const auto& item : data) {
+            std::string truncated = item.length() > 19 ? item.substr(0, 16) + "..." : item;
+            std::cout << std::left << std::setw(20) << truncated;
+            std::cout << "|";
+        }
+        std::cout << "\n" << RESET;
+    }
+    
+    static void printTableFooter(int columnCount) {
+        std::cout << CYAN;
+        std::cout << "+";
+        for(int i = 0; i < columnCount; i++) {
+            for(int j = 0; j < 20; j++) std::cout << "-";
+            if(i < columnCount - 1) std::cout << "+";
+        }
+        std::cout << "+\n" << RESET;
+    }
+    
+    static void printPrompt(const std::string& prompt) {
+        std::cout << BOLD << MAGENTA << "> " << prompt << YELLOW << ": " << RESET;
+    }
+    
+    static void waitForEnter() {
+        std::cout << BOLD << CYAN << "\nPress Enter to continue..." << RESET;
+        std::cin.ignore();
+        std::cin.get();
+    }
+    
+    static void printLogo() {
+        std::cout << YELLOW << BOLD;
+        std::cout << "    UNIVERSITY MANAGEMENT SYSTEM\n";
+        std::cout << "   ════════════════════════════════════\n" << RESET;
+    }
+};
+
 // Simple hash function using std::hash (security limitation noted in README)
 class SimpleHash {
 public:
@@ -741,13 +905,17 @@ public:
     UMSApplication() : currentUser(nullptr) {}
     
     void run() {
-        std::cout << "=== University Management System ===" << std::endl;
-        std::cout << "Welcome to UMS v1.0" << std::endl << std::endl;
+        UIHelper::enableColors();
+        UIHelper::clearScreen();
+        UIHelper::printBanner();
+        
+        std::cout << BOLD << WHITE << "\nWelcome to the Future of Academic Management!\n" << RESET;
+        std::cout << GREEN << "================================================================================\n" << RESET;
         
         while (true) {
             if (!currentUser) {
                 if (!loginOrSignup()) {
-                    std::cout << "Exiting..." << std::endl;
+                    UIHelper::printInfoMessage("Thank you for using UMS! Goodbye!");
                     break;
                 }
             } else {
@@ -762,14 +930,18 @@ public:
         }
         
         db.saveAllData();
+        std::cout << GREEN << BOLD << "\nData saved successfully!\n" << RESET;
     }
     
     bool loginOrSignup() {
-        std::cout << "\n=== WELCOME TO UMS ===" << std::endl;
-        std::cout << "1. Login" << std::endl;
-        std::cout << "2. Sign Up" << std::endl;
-        std::cout << "3. Exit" << std::endl;
-        std::cout << "Choice: ";
+        UIHelper::printSectionHeader("AUTHENTICATION CENTER", "[AUTH]");
+        
+        UIHelper::printMenuOption(1, "Login to Your Account", ">");
+        UIHelper::printMenuOption(2, "Create New Account", ">");
+        UIHelper::printMenuOption(3, "Exit Application", ">");
+        
+        std::cout << CYAN << "================================================================================\n" << RESET;
+        UIHelper::printPrompt("Enter your choice");
         
         int choice;
         std::cin >> choice;
@@ -783,24 +955,36 @@ public:
             return performSignup();
         }
         
+        UIHelper::printErrorMessage("Invalid choice! Please try again.");
+        UIHelper::waitForEnter();
         return loginOrSignup(); // Retry
     }
     
     bool performLogin() {
-        std::cout << "\n=== LOGIN ===" << std::endl;
+        UIHelper::printSectionHeader("USER LOGIN", "[LOGIN]");
+        
         std::string username, password;
-        std::cout << "Username: ";
+        UIHelper::printPrompt("👤 Username");
         std::getline(std::cin, username);
-        std::cout << "Password: ";
+        UIHelper::printPrompt("🔒 Password");
         std::getline(std::cin, password);
         
         User* user = db.findUser(username);
         if (user && user->passwordHash == SimpleHash::hash(password)) {
             currentUser = user;
-            std::cout << "Login successful! Welcome, " << user->name << std::endl;
+            UIHelper::clearScreen();
+            UIHelper::printBanner();
+            UIHelper::printSuccessMessage("Login successful! Welcome back, " + user->name + "! 🎉");
+            
+            std::cout << BOLD << BLUE << "\nHello, " << YELLOW << user->name << BLUE 
+                      << " | Role: " << MAGENTA << user->role << BLUE 
+                      << " | ID: " << GREEN << user->id << RESET << "\n";
+            
+            UIHelper::waitForEnter();
             return true;
         } else {
-            std::cout << "Invalid credentials!" << std::endl;
+            UIHelper::printErrorMessage("Invalid credentials! Please check your username and password.");
+            UIHelper::waitForEnter();
             return loginOrSignup(); // Return to main menu instead of false
         }
     }
@@ -874,20 +1058,29 @@ public:
     
     void logout() {
         currentUser = nullptr;
-        std::cout << "Logged out successfully!" << std::endl;
+        UIHelper::printSuccessMessage("Logged out successfully! See you soon!");
+        UIHelper::waitForEnter();
+        UIHelper::clearScreen();
+        UIHelper::printBanner();
     }
     
     // Admin Menu and Functions
     void adminMenu() {
-        std::cout << "\n=== ADMIN MENU ===" << std::endl;
-        std::cout << "1. Manage Users" << std::endl;
-        std::cout << "2. Manage Departments" << std::endl;
-        std::cout << "3. Manage Semesters" << std::endl;
-        std::cout << "4. Manage Courses" << std::endl;
-        std::cout << "5. View Reports" << std::endl;
-        std::cout << "6. Backup Data" << std::endl;
-        std::cout << "7. Logout" << std::endl;
-        std::cout << "Choice: ";
+        UIHelper::clearScreen();
+        UIHelper::printSectionHeader("ADMINISTRATOR DASHBOARD", "👑");
+        
+        std::cout << BOLD << YELLOW << "\n🔥 Welcome Admin! You have full system control 🔥\n" << RESET;
+        
+        UIHelper::printMenuOption(1, "👥 Manage Users", "👤");
+        UIHelper::printMenuOption(2, "🏢 Manage Departments", "🏛️");
+        UIHelper::printMenuOption(3, "📅 Manage Semesters", "📆");
+        UIHelper::printMenuOption(4, "📚 Manage Courses", "📖");
+        UIHelper::printMenuOption(5, "📊 View System Reports", "📈");
+        UIHelper::printMenuOption(6, "💾 Backup Data", "🗄️");
+        UIHelper::printMenuOption(7, "🚪 Logout", "👋");
+        
+        std::cout << CYAN << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" << RESET;
+        UIHelper::printPrompt("Select an option");
         
         int choice;
         std::cin >> choice;
@@ -901,17 +1094,22 @@ public:
             case 5: viewReports(); break;
             case 6: backupData(); break;
             case 7: logout(); break;
-            default: std::cout << "Invalid choice!" << std::endl;
+            default: 
+                UIHelper::printErrorMessage("Invalid choice! Please select a valid option.");
+                UIHelper::waitForEnter();
         }
     }
     
     void manageDepartments() {
-        std::cout << "\n=== DEPARTMENT MANAGEMENT ===" << std::endl;
-        std::cout << "1. Create Department" << std::endl;
-        std::cout << "2. View All Departments" << std::endl;
-        std::cout << "3. Delete Department" << std::endl;
-        std::cout << "4. Back" << std::endl;
-        std::cout << "Choice: ";
+        UIHelper::printSectionHeader("DEPARTMENT MANAGEMENT", "🏢");
+        
+        UIHelper::printMenuOption(1, "➕ Create New Department", "🆕");
+        UIHelper::printMenuOption(2, "👀 View All Departments", "📋");
+        UIHelper::printMenuOption(3, "🗑️ Delete Department", "❌");
+        UIHelper::printMenuOption(4, "🔙 Back to Admin Menu", "↩️");
+        
+        std::cout << CYAN << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" << RESET;
+        UIHelper::printPrompt("Select an option");
         
         int choice;
         std::cin >> choice;
@@ -922,7 +1120,10 @@ public:
             case 2: viewAllDepartments(); break;
             case 3: deleteDepartment(); break;
             case 4: return;
-            default: std::cout << "Invalid choice!" << std::endl;
+            default: 
+                UIHelper::printErrorMessage("Invalid choice! Please select a valid option.");
+                UIHelper::waitForEnter();
+                manageDepartments();
         }
     }
     
@@ -949,15 +1150,25 @@ public:
     }
     
     void viewAllDepartments() {
-        std::cout << "\n=== ALL DEPARTMENTS ===" << std::endl;
-        std::cout << std::left << std::setw(10) << "Dept ID" << std::setw(25) << "Department Name" 
-                  << std::setw(20) << "Head of Dept" << "Description" << std::endl;
-        std::cout << std::string(80, '-') << std::endl;
+        UIHelper::printSectionHeader("ALL DEPARTMENTS", "🏛️");
+        
+        if (db.departments.empty()) {
+            UIHelper::printWarningMessage("No departments found! Create some departments first.");
+            UIHelper::waitForEnter();
+            return;
+        }
+        
+        std::vector<std::string> headers = {"Dept ID", "Department Name", "Head of Dept", "Description"};
+        UIHelper::printTableHeader(headers);
         
         for (const auto& dept : db.departments) {
-            std::cout << std::left << std::setw(10) << dept.deptId << std::setw(25) << dept.deptName 
-                      << std::setw(20) << dept.headOfDept << dept.description << std::endl;
+            std::vector<std::string> row = {dept.deptId, dept.deptName, dept.headOfDept, dept.description};
+            UIHelper::printTableRow(row);
         }
+        
+        UIHelper::printTableFooter(4);
+        UIHelper::printInfoMessage("Total Departments: " + std::to_string(db.departments.size()));
+        UIHelper::waitForEnter();
     }
     
     void deleteDepartment() {
